@@ -37,7 +37,7 @@ final class ViewDetailAction
         }
 
         $data = $this->auditReader->getEntityValues($className, $entity);
-        krsort($data);
+        ksort($data);
 
         $content = $this->twig->render('@SimpleThingsEntityAudit/Audit/view_detail.html.twig', [
             'id' => $id,
