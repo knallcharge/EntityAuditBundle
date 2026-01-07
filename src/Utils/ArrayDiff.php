@@ -79,9 +79,9 @@ class ArrayDiff
                 return false;
             }
             if (\is_object($value) && \is_object($obj2Properties[$key])) {
-                if (!$this->compareObjects($value, $obj2Properties[$key])) {
-                    return false;
-                }
+                //if (!$this->compareObjects($value, $obj2Properties[$key])) {
+                //    return false;
+                //}
 
                 continue;
             }
