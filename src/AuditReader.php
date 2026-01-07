@@ -1104,12 +1104,11 @@ class AuditReader
                     // data from the main table
                     if ($this->metadataFactory->isAudited($assoc['targetEntity'])
                         && isset(
-                            $targetAssoc['relationToSourceKeyColumns'],
-                            $targetAssoc['relationToSourceKeyColumns'],
-                            $targetAssoc['joinTable']['name'],
-                            $targetAssoc['relationToTargetKeyColumns']
+                            $targetAssoc->relationToSourceKeyColumns,
+                            $targetAssoc->joinTable->name,
+                            $targetAssoc->relationToTargetKeyColumns
                         )) {
-                        foreach ($targetAssoc['relationToTargetKeyColumns'] as $targetKeyJoinColumn => $targetKeyColumn) {
+                        foreach ($targetAssoc->relationToTargetKeyColumns as $targetKeyJoinColumn => $targetKeyColumn) {
                             $whereId[] = "{$targetKeyJoinColumn} = ?";
                             $values[] = $classMetadata->getFieldValue($entity, 'id');
                         }
@@ -1121,10 +1120,10 @@ class AuditReader
                         ];
 
                         $tableName = $this->config->getTablePrefix()
-                            .$targetAssoc['joinTable']['name']
+                            .$targetAssoc->joinTable->name
                             .$this->config->getTableSuffix();
 
-                        foreach ($targetAssoc['relationToSourceKeyColumns'] as $sourceKeyJoinColumn => $sourceKeyColumn) {
+                        foreach ($targetAssoc->relationToSourceKeyColumns as $sourceKeyJoinColumn => $sourceKeyColumn) {
                             $columnList[] = $sourceKeyJoinColumn;
                         }
                         $query = \sprintf(
@@ -1141,7 +1140,7 @@ class AuditReader
                             foreach ($rows as $row) {
                                 $id = [];
                                 /** @phpstan-var string $sourceKeyColumn */
-                                foreach ($targetAssoc['relationToSourceKeyColumns'] as $sourceKeyJoinColumn => $sourceKeyColumn) {
+                                foreach ($targetAssoc->relationToSourceKeyColumns as $sourceKeyJoinColumn => $sourceKeyColumn) {
                                     $joinKey = $row[$sourceKeyJoinColumn];
                                     $id[$sourceKeyColumn] = $joinKey;
                                 }
