@@ -21,6 +21,7 @@ use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\Mapping\ManyToOneAssociationMapping;
 use Doctrine\ORM\Mapping\QuoteStrategy;
 use Doctrine\ORM\PersistentCollection;
 use Doctrine\ORM\Persisters\Entity\EntityPersister;
@@ -676,7 +677,11 @@ class AuditReader
     {
         $metadata = $this->em->getClassMetadata($className);
         $fields = $metadata->getFieldNames();
-
+        foreach ($metadata->getAssociationMappings() as $fieldName => $mapping) {
+            if ($mapping instanceof ManyToOneAssociationMapping) {
+                $fields[]=$fieldName;
+            }
+        }
         $return = [];
         foreach ($fields as $fieldName) {
             $return[$fieldName] = $metadata->getFieldValue($entity, $fieldName);
