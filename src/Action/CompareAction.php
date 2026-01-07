@@ -40,6 +40,7 @@ final class CompareAction
         }
 
         $diff = $this->auditReader->diff($className, $id, $oldRev, $newRev);
+        ksort($diff);
 
         $content = $this->twig->render('@SimpleThingsEntityAudit/Audit/compare.html.twig', [
             'className' => $className,
