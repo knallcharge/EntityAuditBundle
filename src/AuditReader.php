@@ -679,7 +679,7 @@ class AuditReader
         $fields = $metadata->getFieldNames();
         foreach ($metadata->getAssociationMappings() as $fieldName => $mapping) {
             if ($mapping instanceof ManyToOneAssociationMapping) {
-                $fields[]=$fieldName;
+                $fields[] = $fieldName;
             }
         }
         $return = [];

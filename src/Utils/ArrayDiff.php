@@ -71,6 +71,11 @@ class ArrayDiff
             return false;
         }
 
+        // Check if the objects have the same ID
+        if (method_exists($object1, 'getId') && method_exists($object2, 'getId') && $object1->getId() === $object2->getId()) {
+            return true;
+        }
+
         // Check if all properties are the same.
         $obj1Properties = (array) $object1;
         $obj2Properties = (array) $object2;
@@ -79,9 +84,9 @@ class ArrayDiff
                 return false;
             }
             if (\is_object($value) && \is_object($obj2Properties[$key])) {
-                //if (!$this->compareObjects($value, $obj2Properties[$key])) {
-                //    return false;
-                //}
+                if (!$this->compareObjects($value, $obj2Properties[$key])) {
+                    return false;
+                }
 
                 continue;
             }
